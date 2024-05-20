@@ -1,0 +1,18 @@
+services:
+  traefik-proxy:
+    image: traefik:3.0
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.swarm.endpoint=tcp://192.168.65.3:2377"
+      - "--entryPoints.web.address=:80"
+      - "--core.defaultRuleSyntax=v2"
+    ports:
+      - 80:80
+      - 8080:8080
+    networks:
+      - traefik-swarm
+networks:
+  traefik-swarm:
+    external: true
